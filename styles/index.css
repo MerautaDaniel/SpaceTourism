@@ -1,0 +1,874 @@
+/*-----------------------------------*/
+/* Creating a reset for all elements */
+/*-----------------------------------*/
+
+/*Box sizing*/
+
+/*help us to calculate width and hight easier*/
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    /*helps to calculate hights and widths mach easier*/
+}
+
+/* Reset margins */
+/* because the major issue with margins is that on resizing are colaping */
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+figure,
+picture,
+img {
+    margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+    font-weight: 400;
+}
+
+/* Set up th body */
+
+body {
+    font-family: var(--ff-sans-normal);
+    font-size: var(--fs-400);
+    color: hsl(var(--clr-white));
+    background-color: hsl(var(--clr-dark));
+    line-height: 1.5;
+    /*the default for major browsers is 1.4 which is small*/
+    min-height: 100vh;
+    /* to prevent short pages*/
+
+    display: grid;
+    grid-template-rows: min-content 1fr;
+
+    overflow-x: hidden;
+}
+
+/* Make images easier to work with */
+
+/* helps images to shreenk and expand with the page*/
+img,
+picture {
+    max-width: 100%;
+    /*display: block;*/
+}
+
+/* make form elements easier to work with*/
+
+/*because when we use a font-family are not inherited by the buttons or form elements
+basicaly font properties are not inherited by this elements  */
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
+
+/* Remove animations for people who've turned them off */
+/* Increase the accesibility of the web page */
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/*---------------------------------------*/
+/*         Utility clases                */
+/* 1. do one thing and very well         */
+/* 2. usually have one declaration       */
+/* 3. allow things to be more modular    */
+/* 4. allow us to write less in long run */
+/*---------------------------------------*/
+
+.flex {
+    display: flex;
+    gap: var(--gap, 1rem);
+    /* custom property*/
+}
+
+.grid {
+    display: grid;
+    gap: var(--gap, 1rem);
+    /* this custom property help us to put a space between our elements*/
+}
+
+.d-block {
+    display: block;
+}
+
+
+.flow>*:where(:not(:first-child)) {
+    margin-top: var(--flow-space, 1rem);
+}
+
+.flow--space-small {
+    --flow-space: 0.5rem;
+}
+
+.container {
+    padding-inline: 2em;
+    /*this is a new logical property of css which is echivalent of padding-left and padding-right */
+    max-width: 80 rem;
+    /* to be consistent between pages */
+    margin-inline: auto;
+    /*to hold the content in the middle of the page */
+}
+
+
+
+.sr-only {
+    /* Screen reader only allow to reading technology to read elements such us a butoon with no text in it  
+            using this class on an element the element will be invisible but will be present in the DOM.
+            the diffrence between display:none and sr-only class is that display none will take out the ellement from the DOM 
+            (will not exist in the normal flow of the page ) instead sr-only class will hide the ellement and for reader thechnology 
+            will be visible and readable*/
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    /* added line */
+    border: 0;
+}
+
+/*-------------------------------------*/
+/*        Link to main                 */
+/*-------------------------------------*/
+/* -increase the accessibility
+   for the ppl how can not use a mouse using TAB tghey are going streight to the main content 
+   was intuitive to use the sr-only class but we can create a new one to not mix the things */
+
+.skip-to-content {
+    position: absolute;
+    z-index: 9999;
+    background-color: hsl(var(--clr-white) / 0.05);
+    backdrop-filter: blur(1.5rem);
+    color: hsl(var(--clr-light));
+    padding: .5em 1em;
+    margin-inline: auto;
+    transform: translateY(-100%);
+    transition: transform 250ms ease-in;
+}
+
+.skip-to-content:focus {
+    transform: translateY(0);
+}
+
+
+/*-------------------------------------*/
+/*        Custom properties            */
+/*-------------------------------------*/
+
+:root {
+    /*colors*/
+
+    --clr-dark: 230 35% 7%;
+    --clr-light: 231 77% 90%;
+    --clr-white: 0 0% 100%;
+
+    /*font-sizes*/
+
+    --fs-900: clamp(5rem, 8vw + 1rem, 9.375rem);
+    --fs-800: 3.5rem;
+    --fs-700: 1.5rem;
+    --fs-600: 1.2rem;
+    --fs-500: 1rem;
+    --fs-400: 0.9375rem;
+    --fs-300: 0.90rem;
+    --fs-200: 0.875rem;
+
+
+
+    /* font-families*/
+
+    --ff-serif: "Bellefair", serif;
+    --ff-sans-cond: "Barlow Condensed", sans-serif;
+    --ff-sans-normal: "Barlow", sans-serif;
+}
+
+
+@media (min-width: 35em) {
+    :root {
+        --fs-800: 5rem;
+        --fs-700: 2.5rem;
+        --fs-600: 1.5rem;
+        --fs-500: 1.25rem;
+        --fs-400: 1rem;
+    }
+}
+
+@media (min-width: 45em) {
+    :root {
+        /* font-sizes */
+        --fs-800: 6.25rem;
+        --fs-700: 3.5rem;
+        --fs-600: 2rem;
+        --fs-500: 1.75rem;
+        --fs-400: 1.125rem;
+    }
+}
+
+
+
+
+/*-------------------------------------*/
+/*------------Colors-------------------*/
+/*-------------------------------------*/
+/* when the values of RGB or HSL are stored in custom properties it makes
+   easier to tweak the alpha value when needed*/
+/* using a custom value for colors means that var(--clr-dark) is equivalent 
+of 230 35% 7% declared in :root 
+therefor became easy to change the alpha value like hsl(var(--clr-dark) / 0.5)  */
+
+
+.bg-dark {
+    background-color: hsl(var(--clr-dark));
+}
+
+.bg-light {
+    background-color: hsl(var(--clr-light));
+}
+
+.bg-white {
+    background-color: hsl(var(--clr-white));
+}
+
+.text-dark {
+    color: hsl(var(--clr-dark));
+}
+
+.text-light {
+    color: hsl(var(--clr-light));
+}
+
+.text-white {
+    color: hsl(var(--clr-white));
+}
+
+/*-------------------------------------*/
+/*------------Typography---------------*/
+/*-------------------------------------*/
+
+.ff-serif {
+    font-family: var(--ff-serif);
+}
+
+.ff-sans-cond {
+    font-family: var(--ff-sans-cond);
+}
+
+.ff-sans-normal {
+    font-family: var(--ff-sans-normal);
+}
+
+.letter-spacing-1 {
+    letter-spacing: 4.75px;
+}
+
+.letter-spacing-2 {
+    letter-spacing: 2.7px;
+}
+
+.letter-spacing-3 {
+    letter-spacing: 2.35px;
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+.fs-900 {
+    font-size: var(--fs-900);
+}
+
+.fs-800 {
+    font-size: var(--fs-800);
+}
+
+.fs-700 {
+    font-size: var(--fs-700);
+}
+
+.fs-600 {
+    font-size: var(--fs-600);
+}
+
+.fs-500 {
+    font-size: var(--fs-500);
+}
+
+.fs-400 {
+    font-size: var(--fs-400);
+}
+
+.fs-300 {
+    font-size: var(--fs-300);
+}
+
+.fs-200 {
+    font-size: var(--fs-200);
+}
+
+
+.fs-900,
+.fs-800,
+.fs-700,
+.fs-600 {
+    line-height: 1.1;
+}
+
+p {
+    line-height: 1.5rem;
+}
+
+.numbered-title {
+    font-family: var(--ff-sans-cond);
+    font-size: var(--fs-500);
+    text-transform: uppercase;
+    letter-spacing: 4.72px;
+}
+
+.numbered-title span {
+    margin-right: 0.5em;
+    font-weight: 700;
+    color: hsl(var(--clr-white) / .25);
+}
+
+/*-------------------------------------*/
+/*------------Components---------------*/
+/*-------------------------------------*/
+
+.large-button {
+    font-size: 2rem;
+    position: relative;
+    z-index: 1;
+    padding: 0 2em;
+    display: inline-grid;
+    place-items: center;
+    aspect-ratio: 1;
+    text-decoration: none;
+    border-radius: 50%;
+}
+
+.large-button::after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    background: hsl(var(--clr-white) / .15);
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 500ms linear, transform 500ms ease-in-out;
+}
+
+.large-button:hover::after,
+.large-button:focus::after {
+    opacity: 1;
+    transform: scale(1.5);
+}
+
+.small-button>* {
+    font-size: 2rem;
+    width: 5rem;
+    border-radius: 50%;
+    border: 1px solid hsl(var(--clr-white) / .5);
+    aspect-ratio: 1;
+}
+
+.small-button>*:hover,
+.small-button>*:focus {
+    border: 2px solid hsl(var(--clr-white));
+}
+
+.small-button>[aria-selected="true"] {
+    color: hsl(var(--clr-dark));
+    background-color: hsl(var(--clr-white) / 1);
+}
+
+button {
+    background-color: transparent;
+}
+
+/*-------------------------------------*/
+/*-------Primary navigation------------*/
+/*-------------------------------------*/
+
+.logo {
+    margin: 1.5rem clamp(1.5rem, 5vw, 3.5rem);
+}
+
+.primary-header {
+    justify-content: space-between;
+    align-items: center;
+}
+
+.primary-navigation {
+    --gap: clamp(3rem, 5vw, 3.5rem);
+    --underline-gap: 2rem;
+    list-style: none;
+    background-color: hsl(var(--clr-white) / 0.05);
+    backdrop-filter: blur(1.5rem);
+    padding: 0;
+    margin: 0;
+}
+
+.primary-navigation a {
+    text-decoration: none;
+}
+
+.primary-navigation a>span {
+    font-weight: 700;
+    margin-right: 0.5em;
+}
+
+
+
+.mobile-nav-toggle {
+    display: none;
+}
+
+
+@media (max-width: 35rem) {
+    .primary-navigation {
+        --underline-gap: 0.5rem;
+        position: fixed;
+        z-index: 1000;
+        inset: 0 0 0 30%;
+        list-style: none;
+        padding: min(20rem, 15vh) 2rem;
+        margin: 0;
+        flex-direction: column;
+        transform: translateX(100%);
+        transition: transform 500ms ease-in-out;
+    }
+
+    .primary-navigation[data-visible="true"] {
+        transform: translateX(0);
+    }
+
+    .mobile-nav-toggle {
+        display: block;
+        position: absolute;
+        z-index: 2000;
+        right: 1rem;
+        top: 2rem;
+        background: transparent;
+        background-image: url("../assets/shared/icon-hamburger.svg ");
+        background-repeat: no-repeat;
+        background-position: center;
+        width: 1.5rem;
+        aspect-ratio: 1;
+        border: 0;
+    }
+
+    .mobile-nav-toggle[aria-expanded="true"] {
+        background-image: url("../assets/shared/icon-close.svg");
+    }
+
+    .mobile-nav-toggle:focus-visible {
+        outline: 5px solid white;
+        outline-offset: 5px;
+    }
+
+    .primary-navigation.underline-indicators>.active {
+        border: 0;
+    }
+}
+
+@media (min-width: 35em) {
+    .primary-navigation {
+        padding-inline: clamp(3rem, 5vw, 7rem);
+    }
+}
+
+@media (min-width: 35em) and (max-width: 54.999em) {
+    .primary-navigation a>span {
+        display: none;
+    }
+}
+
+@media (min-width: 55em) {
+
+
+    /*linia vietii*/
+
+    .primary-header::after {
+        content: '';
+        display: block;
+        position: relative;
+        height: 1px;
+        width: 100%;
+        margin-right: -2.5rem;
+        background: hsl(var(--clr-white) / .25);
+        order: 1;
+    }
+
+    nav {
+        order: 2;
+    }
+
+    .primary-navigation {
+        margin-block: 2rem;
+    }
+
+
+}
+
+.underline-indicators>* {
+    cursor: pointer;
+    border: 0;
+    border-bottom: 0.2rem solid hsl(var(--clr-light) / 0);
+    padding: var(--underline-gap, 1rem) 0;
+
+}
+
+.underline-indicators>*:hover,
+.underline-indicators>* :focus {
+    border-color: hsl(var(--clr-white) / .5);
+}
+
+.underline-indicators>.active,
+.underline-indicators>[aria-selected="true"] {
+    color: hsl(var(--clr-white) / 1);
+    border-color: hsl(var(--clr-white) / 1);
+}
+
+.tab-list {
+    --gap: 2rem;
+}
+
+.dot-indicators>* {
+    cursor: pointer;
+    border: 0;
+    border-radius: 50%;
+    aspect-ratio: 1;
+    padding: .5rem;
+    background-color: hsl(var(--clr-white) / .25);
+}
+
+.dot-indicators>*:hover,
+.dot-indicators>*:focus {
+    background-color: hsl(var(--clr-white) / .5);
+}
+
+.dot-indicators>[aria-selected="true"] {
+    background-color: hsl(var(--clr-white) / 1);
+}
+
+/* ----------------------------- */
+/* Page specific background      */
+/* ----------------------------- */
+
+/* home */
+body {
+    background-size: cover;
+    background-position: bottom center;
+}
+
+.home {
+    background-image: url("../assets/home/background-home-mobile.jpg");
+}
+
+.destination {
+    background-image: url("../assets/destination/background-destination-mobile.jpg");
+}
+
+.crew {
+    background-image: url("../assets/crew/background-crew-mobile.jpg");
+}
+
+.technology {
+    background-image: url("../assets/technology/background-technology-mobile.jpg");
+}
+
+@media (min-width: 35em) {
+    .home {
+        background-position: center center;
+        background-image: url("../assets/home/background-home-tablet.jpg");
+    }
+
+    .destination {
+        background-image: url("../assets/destination/background-destination-tablet.jpg");
+    }
+
+    .crew {
+        background-image: url("../assets/crew/background-crew-tablet.jpg");
+    }
+
+    .technology {
+        background-image: url("../assets/technology/background-technology-tablet.jpg");
+    }
+}
+
+@media (min-width: 55em) {
+    .home {
+        background-image: url("../assets/home/background-home-desktop.jpg");
+    }
+
+    .destination {
+        background-image: url("../assets/destination/background-destination-desktop.jpg");
+    }
+
+    .crew {
+        background-image: url("../assets/crew/background-crew-desktop.jpg");
+    }
+
+    .technology {
+        background-image: url("../assets/technology/background-technology-desktop.jpg");
+    }
+}
+
+/* ----------------------------- */
+/*        Layout                 */
+/* ----------------------------- */
+
+.grid-container {
+    text-align: center;
+    display: grid;
+    place-items: center;
+    padding-inline: 2rem;
+    padding-bottom: 4rem;
+}
+
+/*.grid-container *{
+    max-width: 50ch;
+}*/
+
+.numbered-title {
+    grid-area: title;
+}
+
+/* Destination Layout*/
+
+.grid-container--destination {
+    --flow-space: 2rem;
+    grid-template-areas:
+        'title'
+        'image'
+        'tabs'
+        'content';
+}
+
+.grid-container--destination>picture {
+    grid-area: image;
+    max-width: 60%;
+}
+
+.grid-container--destination>.tab-list {
+    grid-area: tabs;
+}
+
+.grid-container--destination>.destination-info {
+    grid-area: content;
+}
+
+.destination-meta {
+    flex-direction: column;
+    border-top: 1px solid hsl(var(--clr-white) / .1);
+    padding-top: 2.5rem;
+    margin-top: 2.5rem;
+}
+
+.destination-meta p {
+    font-size: 1.75rem;
+}
+
+/* Crew Layout */
+
+.grid-container--crew {
+    --flow-space: 2rem;
+    grid-template-areas:
+        'title'
+        'image'
+        'tabs'
+        'content';
+}
+
+.grid-container--crew>picture {
+    grid-area: image;
+    max-width: 60%;
+    border-bottom: 1px solid hsl(var(--clr-white) / .1);
+}
+
+.grid-container--crew>.dot-indicators {
+    grid-area: tabs;
+}
+
+.grid-container--crew>.crew-details {
+    grid-area: content;
+}
+
+.crew-details h2 {
+    color: hsl(var(--clr-white) / .5);
+}
+
+
+@media (min-width: 35em) {
+    .numbered-title {
+        justify-self: start;
+        margin-top: 2rem;
+    }
+
+    .destination-meta {
+        flex-direction: row;
+        justify-content: space-evenly;
+    }
+
+    .grid-container--crew {
+        padding-bottom: 0;
+        grid-template-areas:
+            'title'
+            'content'
+            'tabs'
+            'image';
+    }
+}
+
+
+@media (min-width: 55em) {
+    .grid-container {
+        text-align: left;
+        column-gap: var(--container-gap, 3rem);
+        grid-template-columns: minmax(1rem, 1fr) repeat(2, minmax(0, 30rem)) minmax(1rem, 1fr);
+    }
+
+    .grid-container--home>*:first-child {
+        grid-column: 2;
+    }
+
+    .grid-container--home>*:last-child {
+        grid-column: 3;
+    }
+
+    .grid-container--home {
+        padding-bottom: max(6rem, 20vh);
+        align-items: end;
+    }
+
+    .grid-container--destination {
+        justify-items: start;
+        align-content: start;
+        grid-template-areas:
+            '. title title .'
+            '. image tabs .'
+            '. image content .';
+    }
+
+    .grid-container--destination>picture,
+    .grid-container--crew>picture {
+        max-width: 90%;
+    }
+
+    .destination-meta {
+        --gap: min(6vw, 6rem);
+        justify-content: start;
+    }
+
+    .grid-container--crew {
+        grid-template-areas:
+            '. title title .'
+            '. content image .'
+            '. tabs image .';
+    }
+
+    .grid-container--crew>.dot-indicators {
+        justify-self: start;
+    }
+
+    .grid-container--crew>picture {
+        align-self: end;
+    }
+}
+
+/* Technology Layout*/
+.grid-container--technology {
+    grid-template-areas:
+        'title'
+        'image'
+        'small-buttons'
+        'content'
+    ;
+    row-gap: 2rem;
+    max-width: 55rem;
+    place-items: center;
+    padding-bottom: 3rem;
+}
+
+.grid-container--technology>.numbered-title {
+    justify-self: left;
+    padding-left: 3rem;
+}
+
+.grid-container--technology>.technology-details {
+    max-width: 70%;
+}
+
+.technology-details>* {
+    text-align: center;
+}
+
+@media (max-width: 35em) {
+    .grid-container--technology>.numbered-title {
+        justify-self: center;
+    }
+}
+
+@media (min-width:50em) {
+    .grid-container--technology {
+        grid-template-areas:
+            '. title title .'
+            '. small-buttons content image'
+        ;
+        max-width: 100vw;
+    }
+
+    .grid-container--technology>.numbered-title {
+        grid-area: title;
+    }
+
+    .grid-container--technology>.small-button {
+        grid-area: small-buttons;
+    }
+
+    .small-button {
+        flex-direction: column;
+    }
+
+    .grid-container--technology>.technology-details {
+        grid-area: content;
+        max-width: 50ch;
+        padding: 0;
+    }
+
+    .technology-details>* {
+        text-align: left;
+    }
+
+    .grid-container--technology>picture {
+        grid-area: image;
+        justify-self: end;
+    }
+}
